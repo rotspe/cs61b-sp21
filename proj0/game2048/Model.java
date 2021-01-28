@@ -113,6 +113,59 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        board.setViewingPerspective(side);
+
+        boolean[][] mergedTiles = new boolean[][] {
+                {false, false, false, false},
+                {false, false, false, false},
+                {false, false, false, false},
+                {false, false, false, false},
+        };
+
+        final int TOP_ROW = board.size() - 1;
+
+        for (int col = 0; col < board.size(); ++col) {
+            for (int row = board.size() - 1; row >= 0; --row) {
+                Tile t = board.tile(col, row);
+                if (t == null) {
+                    continue;
+                }
+
+                if (row == TOP_ROW) {
+                    continue;
+                }
+
+                Tile t1 = null;
+                int i = row + 1;
+                while (i <= TOP_ROW) {
+                    t1 = board.tile(col, i);
+                    if (t1 != null) {
+                        break;
+                    }
+
+                    ++i;
+                }
+
+                if (t1 == null && i > TOP_ROW) {
+                    board.move(col, TOP_ROW, t);
+                    changed = true;
+                } else if (t1 != null) {
+                    if (t.value() == t1.value()
+                            && !mergedTiles[Side.NORTH.col(col, i, size())][Side.NORTH.row(col, i, size())]) {
+                        if (board.move(col, i, t)) {
+                            mergedTiles[Side.NORTH.col(col, i, size())][Side.NORTH.row(col, i, size())] = true;
+                            score += board.tile(col, i).value();
+                        }
+                    } else {
+                        board.move(col, i - 1, t);
+                    }
+
+                    changed = true;
+                }
+            }
+        }
+
+        board.setViewingPerspective(Side.NORTH);
 
         checkGameOver();
         if (changed) {
