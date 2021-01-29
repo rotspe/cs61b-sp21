@@ -7,3 +7,6 @@ proj0/out
 lab2setup/.idea
 lab2setup/*.iml
 lab2setup/target
+lab2/.idea
+lab2/*.iml
+lab2/target
