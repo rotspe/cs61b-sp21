@@ -14,6 +14,8 @@ public class IntListExercises {
             head.first += c;
             head = head.rest;
         }
+
+        head.first += c;
     }
 
     /**
@@ -51,10 +53,11 @@ public class IntListExercises {
      */
     public static boolean firstDigitEqualsLastDigit(int x) {
         int lastDigit = x % 10;
-        while (x > 10) {
+        int firstDigit = 0;
+        while (x > 0) {
+            firstDigit = x;
             x = x / 10;
         }
-        int firstDigit = x % 10;
         return firstDigit == lastDigit;
     }
 
@@ -77,6 +80,7 @@ public class IntListExercises {
             lst.first *= lst.first;
         }
 
-        return currElemIsPrime || squarePrimes(lst.rest);
+        boolean isRestChanged = squarePrimes(lst.rest);
+        return currElemIsPrime || isRestChanged;
     }
 }
