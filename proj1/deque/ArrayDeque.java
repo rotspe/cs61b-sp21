@@ -62,6 +62,7 @@ public class ArrayDeque<T> {
         --size;
 
         Object firstItem = items[first];
+        items[first] = null;
         return (T) firstItem;
     }
 
@@ -81,6 +82,7 @@ public class ArrayDeque<T> {
         --size;
 
         Object lastItem = items[last];
+        items[last] = null;
         return (T) lastItem;
     }
 
