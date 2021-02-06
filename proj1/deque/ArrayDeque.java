@@ -106,6 +106,13 @@ public class ArrayDeque<T> {
             first = nextFirst + 1;
         }
 
-        return (T) items[first + index];
+        int i;
+        if (first + index >= capacity) {
+            i = first + index - capacity;
+        } else {
+            i = first + index;
+        }
+
+        return (T) items[i];
     }
 }
