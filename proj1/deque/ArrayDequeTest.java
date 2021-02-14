@@ -1,6 +1,9 @@
 package deque;
 
 import org.junit.Test;
+
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 public class ArrayDequeTest {
@@ -96,5 +99,19 @@ public class ArrayDequeTest {
         boolean passed2 = false;
         assertEquals("Should return null when removeFirst is called on an empty Deque,", null, lld1.removeFirst());
         assertEquals("Should return null when removeLast is called on an empty Deque,", null, lld1.removeLast());
+    }
+
+    @Test
+    public void iterator() {
+        Deque<Integer> d = new ArrayDeque<>();
+        d.addLast(1);
+        d.addLast(2);
+        d.addLast(3);
+
+        Iterator<Integer> it = d.iterator();
+        assertEquals(1, (long) it.next());
+        assertEquals(2, (long) it.next());
+        assertEquals(3, (long) it.next());
+        assertFalse(it.hasNext());
     }
 }
