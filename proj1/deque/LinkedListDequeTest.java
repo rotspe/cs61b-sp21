@@ -124,7 +124,7 @@ public class LinkedListDequeTest {
 
     @Test
     public void iterator() {
-        Deque<Integer> d = new LinkedListDeque<>();
+        LinkedListDeque<Integer> d = new LinkedListDeque<>();
         d.addLast(1);
         d.addLast(2);
         d.addLast(3);

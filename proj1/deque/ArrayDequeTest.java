@@ -103,7 +103,7 @@ public class ArrayDequeTest {
 
     @Test
     public void iterator() {
-        Deque<Integer> d = new ArrayDeque<>();
+        ArrayDeque<Integer> d = new ArrayDeque<>();
         d.addLast(1);
         d.addLast(2);
         d.addLast(3);
