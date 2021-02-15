@@ -155,4 +155,9 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     public T getRecursive(int index) {
         return getRecursive(0, index, sentinel.next);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return Deque.equals(this, o);
+    }
 }

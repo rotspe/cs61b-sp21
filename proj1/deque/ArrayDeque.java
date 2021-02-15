@@ -110,7 +110,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return (T) items[i];
     }
 
-    public int getPos(int index) {
+    private int getPos(int index) {
         int first;
         if (nextFirst == capacity - 1) {
             first = 0;
@@ -152,5 +152,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new ArrayDequeIterator<>();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return Deque.equals(this, o);
     }
 }
