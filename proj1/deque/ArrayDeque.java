@@ -23,8 +23,31 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return size;
     }
 
+    private void resize(int newSize) {
+        Object[] itemsResized = new Object[newSize];
+
+        int firstIndex = getPos(0);
+        int firstIndexResized = (newSize - capacity) / 2;
+
+        int numToCopy = capacity - firstIndex;
+        System.arraycopy(items, firstIndex, itemsResized, firstIndexResized, numToCopy);
+
+        int numToCopyRest = capacity - numToCopy;
+        System.arraycopy(items, 0, itemsResized, firstIndexResized + numToCopy, numToCopyRest);
+
+        nextFirst = firstIndexResized - 1;
+        nextLast = firstIndexResized + capacity;
+
+        capacity = newSize;
+        items = itemsResized;
+    }
+
     @Override
     public void addFirst(T item) {
+        if (size == capacity) {
+            resize(2 * capacity);
+        }
+
         items[nextFirst] = item;
         if (nextFirst == 0) {
             nextFirst = capacity - 1;
@@ -37,6 +60,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public void addLast(T item) {
+        if (size == capacity) {
+            resize(2 * capacity);
+        }
+
         items[nextLast] = item;
         if (nextLast == capacity - 1) {
             nextLast = 0;
@@ -74,14 +101,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
 
-        int last;
-        if (nextLast == 0) {
-            last = capacity - 1;
-        } else {
-            last = nextLast - 1;
-        }
-
-        --nextLast;
+        int last = getPos(size() - 1);
+        nextLast = last;
         --size;
 
         Object lastItem = items[last];

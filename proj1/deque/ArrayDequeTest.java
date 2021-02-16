@@ -1,5 +1,6 @@
 package deque;
 
+import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -113,5 +114,69 @@ public class ArrayDequeTest {
         assertEquals(2, (long) it.next());
         assertEquals(3, (long) it.next());
         assertFalse(it.hasNext());
+    }
+
+    @Test
+    public void resize() {
+        ArrayDeque<Integer> d = new ArrayDeque<>();
+        d.addLast(0);
+        d.addLast(1);
+        d.addLast(2);
+        d.addLast(3);
+        d.addLast(4);
+        d.addLast(5);
+        d.addLast(6);
+        d.addLast(7);
+        d.addLast(8);
+
+        assertEquals(0, (long) d.get(0));
+        assertEquals(1, (long) d.get(1));
+        assertEquals(2, (long) d.get(2));
+        assertEquals(3, (long) d.get(3));
+        assertEquals(4, (long) d.get(4));
+        assertEquals(5, (long) d.get(5));
+        assertEquals(6, (long) d.get(6));
+        assertEquals(7, (long) d.get(7));
+        assertEquals(8, (long) d.get(8));
+    }
+
+    @Test
+    public void randomizedTest() {
+        AListNoResizing<Integer> correct = new AListNoResizing<>();
+        ArrayDeque<Integer> broken = new ArrayDeque<>();
+
+        int N = 5000;
+        for (int i = 0; i < N; i += 1) {
+            int operationNumber = StdRandom.uniform(0, 4);
+            if (operationNumber == 0) {
+                // addLast
+                int randVal = StdRandom.uniform(0, 100);
+                correct.addLast(randVal);
+                broken.addLast(randVal);
+            } else if (operationNumber == 1) {
+                // size
+                int sizeL = correct.size();
+                int sizeM = broken.size();
+                assertEquals(sizeL, sizeM);
+            } else if (operationNumber == 2) {
+                // getLast
+                if (correct.size() == 0) {
+                    continue;
+                }
+
+                int lastL = correct.getLast();
+                int lastM = broken.get(broken.size() - 1);
+                assertEquals(lastL, lastM);
+            } else if (operationNumber == 3) {
+                // removeLast
+                if (correct.size() == 0) {
+                    continue;
+                }
+
+                int lastL = correct.removeLast();
+                int lastM = broken.removeLast();
+                assertEquals(lastL, lastM);
+            }
+        }
     }
 }
