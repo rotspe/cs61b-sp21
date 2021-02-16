@@ -179,4 +179,32 @@ public class ArrayDequeTest {
             }
         }
     }
+
+    @Test
+    public void randomizedTestIncludingGet() {
+        ArrayDeque<Integer> d = new ArrayDeque<>();
+
+        d.addLast(0);
+        assertEquals(0, (long) d.get(0));
+        d.addLast(2);
+        assertEquals(0, (long) d.removeFirst());
+        assertEquals(2, (long) d.removeFirst());
+        d.addLast(5);
+        d.addLast(6);
+        d.addFirst(7);
+        d.addLast(8);
+        assertEquals(8, (long) d.get(3));
+        d.addLast(10);
+        assertEquals(7, (long) d.removeFirst());
+        assertEquals(5, (long) d.removeFirst());
+        d.addLast(13);
+        d.addLast(14);
+        d.addLast(15);
+        assertEquals(14, (long) d.get(4));
+        assertEquals(15, (long) d.removeLast());
+        assertEquals(8, (long) d.get(1));
+        assertEquals(14, (long) d.removeLast());
+        assertEquals(6, (long) d.removeFirst());
+        d.addFirst(21);
+    }
 }

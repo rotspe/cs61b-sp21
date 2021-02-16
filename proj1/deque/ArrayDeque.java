@@ -80,14 +80,8 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
 
-        int first;
-        if (nextFirst == capacity - 1) {
-            first = 0;
-        } else {
-            first = nextFirst + 1;
-        }
-
-        ++nextFirst;
+        int first = getPos(0);
+        nextFirst = first;
         --size;
 
         Object firstItem = items[first];
