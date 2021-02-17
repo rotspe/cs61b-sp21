@@ -23,7 +23,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         return size;
     }
 
-    private void resize(int newSize) {
+    private void resizeUp(int newSize) {
         Object[] itemsResized = new Object[newSize];
 
         int firstIndex = getPos(0);
@@ -42,10 +42,25 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         items = itemsResized;
     }
 
+    private void resizeDown(int newSize) {
+        Object[] itemsResized = new Object[newSize];
+
+        int firstIndexResized = (newSize - size) / 2;
+        for (int i = 0, j = firstIndexResized; i < size; ++i, ++j) {
+            itemsResized[j] = get(i);
+        }
+
+        nextFirst = firstIndexResized - 1;
+        nextLast = firstIndexResized + size;
+
+        capacity = newSize;
+        items = itemsResized;
+    }
+
     @Override
     public void addFirst(T item) {
         if (size == capacity) {
-            resize(2 * capacity);
+            resizeUp(2 * capacity);
         }
 
         items[nextFirst] = item;
@@ -61,7 +76,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public void addLast(T item) {
         if (size == capacity) {
-            resize(2 * capacity);
+            resizeUp(2 * capacity);
         }
 
         items[nextLast] = item;
@@ -80,6 +95,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
 
+        if (size - 1 < capacity / 4) {
+            resizeDown(capacity / 2);
+        }
+
         int first = getPos(0);
         nextFirst = first;
         --size;
@@ -93,6 +112,10 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public T removeLast() {
         if (isEmpty()) {
             return null;
+        }
+
+        if (size - 1 < capacity / 4) {
+            resizeDown(capacity / 2);
         }
 
         int last = getPos(size() - 1);
