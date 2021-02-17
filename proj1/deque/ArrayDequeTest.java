@@ -207,4 +207,16 @@ public class ArrayDequeTest {
         assertEquals(6, (long) d.removeFirst());
         d.addFirst(21);
     }
+
+    @Test
+    public void randomizedTest2() {
+        ArrayDeque<Integer> d = new ArrayDeque<>();
+
+        d.addFirst(0);
+        assertFalse(d.isEmpty());
+        assertEquals(0, (long) d.removeLast());
+        d.addFirst(3);
+        assertEquals(3, (long) d.removeLast());
+        d.addFirst(5);
+    }
 }

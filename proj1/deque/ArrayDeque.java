@@ -95,7 +95,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
 
-        if (size - 1 < capacity / 4) {
+        if (size >= 16 && size - 1 < capacity / 4) {
             resizeDown(capacity / 2);
         }
 
@@ -114,7 +114,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             return null;
         }
 
-        if (size - 1 < capacity / 4) {
+        if (size >= 16 && size - 1 < capacity / 4) {
             resizeDown(capacity / 2);
         }
 
